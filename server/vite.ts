@@ -1,7 +1,7 @@
 import { type Express } from "express";
-import { createServer as createViteServer, createLogger } from "vite";
+import { createServer as createViteServer, createLogger, type UserConfigExport, type ConfigEnv } from "vite";
 import { type Server } from "http";
-import viteConfig from "../vite.config.ts";
+import viteConfig from "../vite.config";
 import fs from "fs";
 import path from "path";
 import { nanoid } from "nanoid";
@@ -15,10 +15,14 @@ export async function setupVite(server: Server, app: Express) {
     allowedHosts: true as const,
   };
 
+  const viteConfigExport = viteConfig as unknown as UserConfigExport | ((env: ConfigEnv) => Promise<UserConfigExport>);
   const resolvedViteConfig =
-    typeof viteConfig === "function"
-      ? await viteConfig()
-      : viteConfig;
+    typeof viteConfigExport === "function"
+      ? await viteConfigExport({
+          command: "serve",
+          mode: process.env.NODE_ENV || "development",
+        })
+      : viteConfigExport;
 
   const vite = await createViteServer({
     ...resolvedViteConfig,

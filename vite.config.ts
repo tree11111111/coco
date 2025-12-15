@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import { fileURLToPath } from "url";
-import { metaImagesPlugin } from "./vite-plugin-meta-images.ts";
+import { metaImagesPlugin } from "./vite-plugin-meta-images";
 
 const rootDir = fileURLToPath(new URL(".", import.meta.url));
 
