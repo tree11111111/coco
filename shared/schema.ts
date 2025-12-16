@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, jsonb, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, jsonb, boolean, serial } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -19,7 +19,7 @@ export type User = typeof users.$inferSelect;
 
 // Posts table
 export const posts = pgTable("posts", {
-  id: integer("id").primaryKey().notNull(),
+  id: serial("id").primaryKey(),
   title: text("title").notNull(),
   content: text("content").notNull(),
   author: text("author").notNull(),
@@ -32,7 +32,7 @@ export const posts = pgTable("posts", {
 
 // Album Photos table
 export const albumPhotos = pgTable("album_photos", {
-  id: integer("id").primaryKey().notNull(),
+  id: serial("id").primaryKey(),
   url: text("url").notNull(),
   title: text("title").notNull(),
   date: text("date").notNull(),
@@ -86,7 +86,7 @@ export const registeredChildren = pgTable("registered_children", {
 
 // Site Settings table (single row)
 export const siteSettings = pgTable("site_settings", {
-  id: integer("id").primaryKey().default(1),
+  id: serial("id").primaryKey(),
   address: text("address").notNull(),
   phone: text("phone").notNull(),
   email: text("email").notNull(),
