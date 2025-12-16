@@ -6,12 +6,12 @@
   "scripts": {
     "predev": "mkdir -p .tmp",
     "dev:client": "vite dev --port 3000",
-    "dev": "NODE_ENV=development ts-node --esm --transpile-only server/index.ts",
+    "dev": "DATABASE_URL='postgresql://cocobebe_2s46_user:AhUhpJ0JSwNrcNcvMzlybL6iDYRxpgx4@dpg-d4vo1ehr0fns739pgqe0-a.singapore-postgres.render.com:5432/cocobebe_2s46?sslmode=require' NODE_ENV=development ts-node --esm --transpile-only server/index.ts",
     "build": "tsx script/build.ts",
     "build:pages": "cd client && vite build --config ../vite.config.ts --outDir ../docs --base=/ && cp ../docs/index.html ../docs/404.html",
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
-    "db:push": "drizzle-kit push"
+    "db:push": "DATABASE_URL='postgresql://cocobebe_2s46_user:AhUhpJ0JSwNrcNcvMzlybL6iDYRxpgx4@dpg-d4vo1ehr0fns739pgqe0-a.singapore-postgres.render.com:5432/cocobebe_2s46?sslmode=require' drizzle-kit push"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
