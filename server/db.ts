@@ -43,6 +43,8 @@ const pool = new Pool({
   max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
+  // Render External DBs need SSL; allow self-signed
+  ssl: { rejectUnauthorized: false },
 });
 
 // Test connection and check if tables exist
