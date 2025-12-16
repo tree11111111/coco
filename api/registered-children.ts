@@ -1,8 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { storage } from '../server/storage.ts';
+import { storage } from '../server/storage';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
+    if (!process.env.DATABASE_URL) {
+      return res.status(500).json({ 
+        error: 'Database configuration error. Please set DATABASE_URL environment variable.' 
+      });
+    }
+
     if (req.method === 'GET') {
       const children = await storage.getRegisteredChildren();
       return res.json(children);
@@ -15,8 +21,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     return res.status(405).json({ error: 'Method not allowed' });
   } catch (error: any) {
-    console.error('[API] Error:', error);
-    return res.status(500).json({ error: error.message || 'Internal server error' });
+    console.error('[API] Error in /api/registered-children:', error);
+    return res.status(500).json({ 
+      error: error.message || 'Internal server error'
+    });
   }
 }
 
