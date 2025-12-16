@@ -81,7 +81,7 @@ export async function registerRoutes(
   // Test endpoint
   app.get("/api/test-db", async (_req, res) => {
     try {
-      const { pool } = await import("./db");
+      const { pool } = await import("./db.ts");
       const result = await pool.query("SELECT 1 as test");
       res.json({ success: true, test: result.rows[0] });
     } catch (error: any) {
